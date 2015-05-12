@@ -1,0 +1,5 @@
+plugins/*
+.DS_Store
+cordova.js
+cordova_plugins.js
+
