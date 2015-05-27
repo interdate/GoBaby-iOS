@@ -925,6 +925,23 @@
 			</div>
 			<!--End Edit Profile Page -->
 			
+			<!--Start Report Abuse Page -->
+			<div id="report_abuse_page"  class="appPage">
+				<div data-role="content">
+					<div class="content_wrap">
+						<h1>Report Abuse</h1>
+						<div class="dots"></div>
+						
+						<h1>Message:</h1>
+						<textarea style="height:130px;" id="abuseMessage"></textarea>
+						<button data-theme="a" onclick="app.reportAbuse();">Send</button>
+						
+						
+					</div>
+				</div>
+			</div>
+			<!--End Report Abuse Page -->
+			
 			
 			
 		</div>
@@ -1250,6 +1267,15 @@
 				</figure>
 			</div>
 			<!-- END User Photo Template -->
+			
+			
+			<!-- START User Profile Buttons Template 2-->
+			<div id="userProfileButtonsTemplate_2">
+				<button onclick="app.showPage('report_abuse_page')" data-theme="a">דווחו למערכת על כרטיס לא תקין</button>
+				<div class="clear"></div>
+				<br />
+			</div>
+			<!-- END User Profile Buttons Template 2-->
 			
 		</div>
 		

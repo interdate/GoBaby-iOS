@@ -85,6 +85,7 @@ var app = {
 	statAction : '',
 	searchFuncsMainCall: '',
 	sort: '',
+	reportAbuseUserId : '',
 	
 	
 	profileGroupTemplate : '',
@@ -422,6 +423,28 @@ var app = {
 		 */
 	},
 	
+reportAbuse: function(){
+	
+	var abuseMessage = $('#abuseMessage').val();
+	
+	$.ajax({
+	   url: 'http://m.gobaby.co.il/api/v2/user/abuse/'+app.reportAbuseUserId,
+	   type: 'Post',
+	   contentType: "application/json; charset=utf-8",
+	   data: JSON.stringify({abuseMessage: abuseMessage}),
+	   error: function(response){
+		   
+		   //alert(JSON.stringify(response));
+		   
+	   },
+	   success: function(response, status, xhr){
+		   $('#abuseMessage').val('');
+		   app.alert('Thank you. The message has been sent');
+		   app.back();
+		}
+	});
+},
+	
 	printUsers: function(){
 		$.ajax({
 			url: 'http://m.gobaby.co.il/api/v2/users/recently_visited/2',
@@ -701,7 +724,7 @@ var app = {
 			timeout:10000,
 			success: function(response, status){
 				app.response = response;
-				//alert(JSON.stringify(app.response));				
+				console.log(JSON.stringify(app.response));
 				app.displayUsers();
 			}//,
 			//error:function(err){
@@ -1140,6 +1163,10 @@ var app = {
 			type: 'Get',
 			success: function(user, status, xhr){
 				console.log( JSON.stringify(user));
+			   app.reportAbuseUserId = userId;
+
+			   
+			   
 				$('.my-gallery').html('');
 			   
 				app.showPage('user_profile_page');
@@ -1239,6 +1266,20 @@ var app = {
 				profileButtonsTemplate = profileButtonsTemplate.replace(/\[USERNICK\]/g,user.nickName);									
 				profileButtonsTemplate = profileButtonsTemplate.replace("[USER_ID]", user.userId);
 				//profileButtonsTemplate.insertBefore(detailsContainer);
+			   
+			   if(user.userId != window.localStorage.getItem('userId')){
+			        var profileButtonsTemplate = $('#userProfileButtonsTemplate').html();
+			        var profileButtonsTemplate_2 = $('#userProfileButtonsTemplate_2').html();
+			        profileButtonsTemplate = profileButtonsTemplate.replace(/\[USERNICK\]/g,user.nickName);
+			        profileButtonsTemplate = profileButtonsTemplate.replace("[USER_ID]", user.userId);
+			   }
+			   else{
+			       var profileButtonsTemplate = '';
+			       var profileButtonsTemplate_2 = '';
+			   }
+			   
+			   
+			   
 				var html = profileButtonsTemplate;	
 				
 				if(!((user.eyesColor== undefined || user.eyesColor=='') && (user.bodyType== undefined || user.bodyType=='') && (user.hairColor== undefined || user.hairColor=='') && (user.hairLength== undefined || user.hairLength=='') && (user.breast== undefined || user.breast=='')))
@@ -1281,7 +1322,13 @@ var app = {
 				//	if(user.hobbies!== undefined && user.hobbies!=='')html = html + app.getProfileLine("תחומי העניין שלי", user.hobbies);
 				//	if(user.music!== undefined && user.music!=='')html = html + app.getProfileLine("המוסיקה שלי", user.music);
 				//}
-				detailsContainer.html(html);
+			   
+			   html = html + profileButtonsTemplate + profileButtonsTemplate_2;
+			   
+			   detailsContainer.html(html);
+
+
+			   
 				app.stopLoading();				
 			}
 		});
