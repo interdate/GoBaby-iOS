@@ -216,7 +216,7 @@ var app = {
 		}
 		
 		$.ajax({				
-			url: 'http://m.gobaby.co.il/api/v2/user/logout',			
+			url: 'http://m.gobaby.co.il/api/v4/user/logout',			
 			success: function(data, status){	
 				//alert(JSON.stringify(data));
 				if(data.logout == 1){					
@@ -300,7 +300,7 @@ var app = {
 		}
 	
 		$.ajax({ 
-			url: 'http://m.gobaby.co.il/api/v2/user/login',
+			url: 'http://m.gobaby.co.il/api/v4/user/login',
 			error: function(response){				
 				//alert(JSON.stringify(response));
 			},
@@ -334,7 +334,7 @@ var app = {
 	
 	setBannerDestination: function(){
 		$.ajax({				
-			url: 'http://m.gobaby.co.il/api/v2/user/banner',			
+			url: 'http://m.gobaby.co.il/api/v4/user/banner',			
 			success: function(response, status){
 				app.response = response;
 				//alert(JSON.stringify(app.response));   
@@ -369,7 +369,7 @@ var app = {
 		window.localStorage.setItem("pass",pass);
 		
 		$.ajax({				
-			url: 'http://m.gobaby.co.il/api/v2/user/login',			
+			url: 'http://m.gobaby.co.il/api/v4/user/login',			
 			beforeSend: function(xhr){
 				user = window.localStorage.getItem("user");
 				pass = window.localStorage.getItem("pass");
@@ -405,7 +405,7 @@ var app = {
 		//return;
 		
 		$.ajax({
-			url: 'http://m.gobaby.co.il/api/v2/user/location',
+			url: 'http://m.gobaby.co.il/api/v4/user/location',
 			type: 'Post',
 			data:JSON.stringify(data),
 			success: function(response){
@@ -428,7 +428,7 @@ reportAbuse: function(){
 	var abuseMessage = $('#abuseMessage').val();
 	
 	$.ajax({
-	   url: 'http://m.gobaby.co.il/api/v2/user/abuse/'+app.reportAbuseUserId,
+	   url: 'http://m.gobaby.co.il/api/v4/user/abuse/'+app.reportAbuseUserId,
 	   type: 'Post',
 	   contentType: "application/json; charset=utf-8",
 	   data: JSON.stringify({abuseMessage: abuseMessage}),
@@ -447,7 +447,7 @@ reportAbuse: function(){
 	
 	printUsers: function(){
 		$.ajax({
-			url: 'http://m.gobaby.co.il/api/v2/users/recently_visited/2',
+			url: 'http://m.gobaby.co.il/api/v4/users/recently_visited/2',
 			success: function(data, status){
 				for ( var i = 0; i < data.users.length; i++) {
 					$("#udp_"+i).find(".user_photo_wrap .user_photo").attr("src",data.users[i].mainImage);
@@ -551,7 +551,7 @@ reportAbuse: function(){
     
     persistGcmDeviceId: function(){
     	$.ajax({				
-			url: 'http://m.gobaby.co.il/api/v2/user/gcmDeviceId',
+			url: 'http://m.gobaby.co.il/api/v4/user/gcmDeviceId',
 			type: 'Post',
 			data: JSON.stringify({			
 				gcmDeviceId: app.gcmDeviceId 
@@ -598,9 +598,20 @@ reportAbuse: function(){
 		if(app.currentPageId == 'users_list_page'){
 			app.template = $('#userDataTemplate').html();
 			window.scrollTo(0, app.recentScrollPos);
-			app.setScrollEventHandler();
+			app.setScrollEventHandler(2500,3500);
 		}
-		app.searchFuncsMainCall = true;
+		else if(app.currentPageId == 'messenger_page'){
+			app.template = $('#messengerTemplate').html();
+			console.log(app.recentScrollPos);
+			window.scrollTo(0, app.recentScrollPos);
+			app.setScrollEventHandler(1000,2000);
+			
+		}
+		else{
+			var usersListPage = pagesTracker[pagesTracker.length-2];
+			if(usersListPage != 'users_list_page')
+			app.searchFuncsMainCall = true;
+		}
 		app.stopLoading();
 	},
 	
@@ -679,6 +690,7 @@ reportAbuse: function(){
 		app.container.append('<h1>תוצאות</h1><div class="dots"></div>');
 		app.action = 'getOnlineNow';
 		app.pageNumber = 1;
+		app.itemsPerPage = 15;
 		app.getUsers();
 	},
 	
@@ -697,7 +709,7 @@ reportAbuse: function(){
 		}
 		//alert(app.sort);
 		if(app.action == 'getOnlineNow'){					
-			app.requestUrl = 'http://m.gobaby.co.il/api/v2/users/online/count:'+app.itemsPerPage+'/page:'+app.pageNumber+'/sort:'+app.sort;
+			app.requestUrl = 'http://m.gobaby.co.il/api/v4/users/online/count:'+app.itemsPerPage+'/page:'+app.pageNumber+'/sort:'+app.sort;
 			//alert(app.requestUrl);
 		}	
 		else if(app.action == 'getSearchResults'){
@@ -713,10 +725,10 @@ reportAbuse: function(){
 				sexPref+=$(this).val();
 			});			
 			
-			app.requestUrl = 'http://m.gobaby.co.il/api/v2/users/search/region:'+region+'/age:'+ageFrom+'-'+ageTo+'/userGender:'+userGender+'/nickName:'+nickName+'/count:'+app.itemsPerPage+'/page:'+app.pageNumber+'/sexPreference:'+sexPref+'/sort:'+app.sort;;
+			app.requestUrl = 'http://m.gobaby.co.il/api/v4/users/search/region:'+region+'/age:'+ageFrom+'-'+ageTo+'/userGender:'+userGender+'/nickName:'+nickName+'/count:'+app.itemsPerPage+'/page:'+app.pageNumber+'/sexPreference:'+sexPref+'/sort:'+app.sort;;
 		}	
 		else if(app.action == 'getStatResults'){					
-			app.requestUrl = 'http://m.gobaby.co.il/api/v2/user/statistics/'+app.statAction+'/count:'+app.itemsPerPage+'/page:'+app.pageNumber+'/sort:'+app.sort;
+			app.requestUrl = 'http://m.gobaby.co.il/api/v4/user/statistics/'+app.statAction+'/count:'+app.itemsPerPage+'/page:'+app.pageNumber+'/sort:'+app.sort;
 		}
 		
 		getUsersRequest = $.ajax({						
@@ -726,10 +738,10 @@ reportAbuse: function(){
 				app.response = response;
 				console.log(JSON.stringify(app.response));
 				app.displayUsers();
-			}//,
-			//error:function(err){
-			//	alert(JSON.stringify(err));	
-			//}
+			},
+			error:function(err){
+				alert(JSON.stringify(err));
+			}
 		});
 	},	
 	
@@ -737,76 +749,129 @@ reportAbuse: function(){
 	displayUsers: function() {
 		//app.container.parent('div').append('<h1>תוצאות</h1>');
 		
-		console.log(JSON.stringify(app.response));
+		if(app.currentPageId == 'users_list_page'){
+			
+			$('.loadingHTML').remove();
+			
+			var userId = window.localStorage.getItem("userId");
+			
+			console.log(app.response.users.itemsNumber);
+			
+			
+			if(app.response.users.itemsNumber == 0){
+				app.container.append('<div class="center noResults">אין תוצאות</div>')
+				return;
+			}
 		
-		for(var i in app.response.users.items){
-			var currentTemplate = app.template; 
-			var user = app.response.users.items[i];
-			currentTemplate = currentTemplate.replace("[USERNICK]",user.nickName);
-			currentTemplate = currentTemplate.replace("[AGE]",user.age);
-			//currentTemplate = currentTemplate.replace("[COUNTRY]",user.country+',');
-			currentTemplate = currentTemplate.replace("[CITY]",user.city);
-			currentTemplate = currentTemplate.replace("[IMAGE]",user.mainImage);			
-			currentTemplate = currentTemplate.replace(/\[USERNICK\]/g,user.nickName);										
-			currentTemplate = currentTemplate.replace("[USER_ID]", user.id);	
-			//var aboutUser = '';
-			//if(typeof(user.about) === 'string'){   
-			//	if(user.about.length > 90){
-			//		aboutUser = user.about.substring(0,90)+'...';
-			//	}
-			//	else{
-			//		aboutUser = user.about;
-			//	}
-			//}
+			for(var i in app.response.users.items){
+				var currentTemplate = app.template; 
+				var user = app.response.users.items[i];
+				currentTemplate = currentTemplate.replace("[USERNICK]",user.nickName);
+				currentTemplate = currentTemplate.replace("[AGE]",user.age);
+				//currentTemplate = currentTemplate.replace("[COUNTRY]",user.country+',');
+				currentTemplate = currentTemplate.replace("[CITY]",user.city);
+				currentTemplate = currentTemplate.replace("[IMAGE]",user.mainImage.url);
+				currentTemplate = currentTemplate.replace(/\[USERNICK\]/g,user.nickName);										
+				currentTemplate = currentTemplate.replace("[USER_ID]", user.id);	
+				//var aboutUser = '';
+				//if(typeof(user.about) === 'string'){   
+				//	if(user.about.length > 90){
+				//		aboutUser = user.about.substring(0,90)+'...';
+				//	}
+				//	else{
+				//		aboutUser = user.about;
+				//	}
+				//}
+				
+				//if(user.about != null) console.log("INDEX OF " + user.about.indexOf(" "));
+				
+				if(user.about == null || user.about.indexOf(" ") > 20)
+					user.about='';
+				
+				
+				if(user.about == null)
+					user.about='';
+				
+				currentTemplate = currentTemplate.replace("[ABOUT]", user.about);			
+				app.container.append(currentTemplate);			
+				var currentUserNode = app.container.find(".user_data:last-child");			
+				currentUserNode.find(".user_short_txt").attr("onclick","app.getUserProfile("+user.id+");");
+				currentUserNode.find(".user_photo_wrap").attr("onclick","app.getUserProfile("+user.id+");");
+				if(user.isNew == 1){						
+					currentUserNode.find(".blue_star").show();
+				}					
+				if(user.isPaying == 1){						
+					currentUserNode.find(".special3").show();
+				}
+				if(user.isOnline == 1){						
+					currentUserNode.find(".on2").show();				
+				}else{
+					currentUserNode.find(".on").show();
+				}
+				if(user.id==window.localStorage.getItem("userId")){
+					currentUserNode.find('.send_mes').hide();
+				}
+				if(user.distance != ""){						
+					currentUserNode.find(".distance_value").show().find("span").html(user.distance);
+				}			
+			}
+			//setTimeout(app.stopLoading(), 10000);
+			//app.stopLoading();
+			app.responseItemsNumber = app.response.users.itemsNumber;
+			if(app.responseItemsNumber == app.itemsPerPage){
+				var loadingHTML = '<div class="loadingHTML">'+$('#loadingBarTemplate').html()+'</div>';
+				$(loadingHTML).insertAfter(currentUserNode);
+			}
 			
-			if(user.about == null)
-				user.about='';
+			app.setScrollEventHandler(2500,3500);
 			
-			currentTemplate = currentTemplate.replace("[ABOUT]", user.about);			
-			app.container.append(currentTemplate);			
-			var currentUserNode = app.container.find(".user_data:last-child");			
-			currentUserNode.find(".user_short_txt").attr("onclick","app.getUserProfile("+user.id+");");
-			currentUserNode.find(".user_photo_wrap").attr("onclick","app.getUserProfile("+user.id+");");
-			if(user.isNew == 1){						
-				currentUserNode.find(".blue_star").show();
-			}					
-			if(user.isPaying == 1){						
-				currentUserNode.find(".special3").show();
-			}
-			if(user.isOnline == 1){						
-				currentUserNode.find(".on2").show();				
-			}else{
-				currentUserNode.find(".on").show();
-			}
-			if(user.id==window.localStorage.getItem("userId")){
-				currentUserNode.find('.send_mes').hide();
-			}
-			if(user.distance != ""){						
-				currentUserNode.find(".distance_value").show().find("span").html(user.distance);
-			}			
+			
 		}
-		//setTimeout(app.stopLoading(), 10000);
-		//app.stopLoading();
-		app.responseItemsNumber = app.response.users.itemsNumber;
-		app.setScrollEventHandler();
+		else{
+			app.pageNumber--;
+		}
+			
 	},	
 	
-		
-	setScrollEventHandler: function(){
-		$(window).scroll(function(){
-						 
-			var min=600;
-			if($(this).width()>767)min=1250;
-			app.recentScrollPos = $(this).scrollTop();
-			if(app.recentScrollPos >= app.container.height()-min){						
-				$(this).unbind("scroll");				
-				if(app.responseItemsNumber == app.itemsPerPage){					
-					app.pageNumber++;					
-					app.getUsers();
-				}
-			}
-		});
-	},
+	
+	
+    setScrollEventHandler: function(min1, min2){
+	    $(window).scroll(function(){
+					 //var min=2500;
+					 
+					 min = min1;
+					 if($(this).width()>767) min = min2;
+					 
+					 
+					 app.recentScrollPos = $(this).scrollTop();
+					 console.log('setScrollEventHandler:' + app.recentScrollPos);
+					 console.log(app.recentScrollPos + ':' + app.container.height());
+					 //alert(app.recentScrollPos + ' > ' + app.container.height() +' - ' +min);
+					 
+					 
+					 
+					 if(app.recentScrollPos >= app.container.height()-min){
+					 $(this).unbind("scroll");
+					 
+					 //alert(app.recentScrollPos);
+					 
+					 
+					 if(app.responseItemsNumber == app.itemsPerPage){
+					 
+					 app.pageNumber++;
+					 
+					 if(app.currentPageId == 'messenger_page'){
+					 app.getMessenger();
+					 }
+					 else{
+						app.getUsers();
+					 }
+					 }
+					 //else alert(app.itemsPerPage);
+					 }
+					 
+					 });
+    },
 	
 	getMyProfileData: function(){		
 		app.startLoading();
@@ -827,7 +892,7 @@ reportAbuse: function(){
 		});	
 		var userId = window.localStorage.getItem("userId");		
 		$.ajax({
-			url: 'http://m.gobaby.co.il/api/v2/user/profile/'+userId,						
+			url: 'http://m.gobaby.co.il/api/v4/user/profile/'+userId,						
 			success: function(user, status, xhr){
 				//alert( JSON.stringify(user));
 				app.showPage('my_profile_page');
@@ -835,7 +900,7 @@ reportAbuse: function(){
 				app.container.find('.txt strong').html(user.nickName+', <span>'+user.age+'</span>');			
 				app.container.find('.txt strong').siblings('span').text(user.city); 
 				app.container.find('.txt').append(user.about);			
-				app.container.find('.user_pic img').attr("src",user.mainImage);		
+				app.container.find('.user_pic img').attr("src",user.mainImage.url);
 				if(user.isPaying==1){
 					app.container.find(".special4").show();
 				}				
@@ -882,7 +947,7 @@ reportAbuse: function(){
             return false;
         }
         $.ajax({
-        	url: 'http://m.gobaby.co.il/api/v2/recovery/'+mail,
+        	url: 'http://m.gobaby.co.il/api/v4/recovery/'+mail,
         	success: function(response){
         		//alert(JSON.stringify(response));
         		if(!response.err)
@@ -928,7 +993,7 @@ reportAbuse: function(){
 		
 	getSexPreference: function(){
 		$.ajax({			
-			url: 'http://m.gobaby.co.il/api/v2/list/sexPref',						
+			url: 'http://m.gobaby.co.il/api/v4/list/sexPref',						
 			success: function(list, status, xhr){							
 			   
 				//alert( JSON.stringify(list));
@@ -972,7 +1037,7 @@ reportAbuse: function(){
 	
 	getRegions: function(){
 		$.ajax({
-			url: 'http://m.gobaby.co.il/api/v2/list/regions',						
+			url: 'http://m.gobaby.co.il/api/v4/list/regions',						
 			success: function(list, status, xhr){							
 				var html = '<select name="regionCode">';
 				if(app.currentPageId == 'search_form_page'){
@@ -1009,7 +1074,7 @@ reportAbuse: function(){
 	/*
 	getCities: function(countryCode,regionCode){
 		$.ajax({
-			url: 'http://m.shedate.co.il/api/v2/list/cities/'+countryCode+'/'+regionCode,						
+			url: 'http://m.shedate.co.il/api/v4/list/cities/'+countryCode+'/'+regionCode,						
 			success: function(list, status, xhr){
 				app.container.find("#cities_wrap").hide();				
 				if(list.itemsNumber > 0){
@@ -1041,12 +1106,15 @@ reportAbuse: function(){
 				$('#regForm').serializeObject()
 			);
 			$.ajax({
-				url: 'http://m.gobaby.co.il/api/v2/user',
+				url: 'http://m.gobaby.co.il/api/v4/user',
 				type: 'Post',
 				data: data,
+				error: function(response){
+				   console.log( JSON.stringify(response));
+				},
 				success: function(response){
 					app.response = response;
-					//alert( JSON.stringify(app.response));
+					console.log( JSON.stringify(app.response));
 					app.stopLoading();
 					if(app.response.result > 0){
 						var user = app.container.find("#userEmail").val(); 
@@ -1143,6 +1211,7 @@ reportAbuse: function(){
 		app.container.html('');
 		app.container.append('<h1>תוצאות</h1><div class="dots"></div>');
 		app.pageNumber = 1;
+		app.itemsPerPage = 30;
 		app.action = 'getSearchResults';
 		app.getUsers();
 	},
@@ -1159,7 +1228,7 @@ reportAbuse: function(){
 		app.ajaxSetup();
 		app.startLoading();	
 		$.ajax({
-			url: 'http://m.gobaby.co.il/api/v2/user/profile/'+userId,
+			url: 'http://m.gobaby.co.il/api/v4/user/profile/'+userId,
 			type: 'Get',
 			success: function(user, status, xhr){
 				console.log( JSON.stringify(user));
@@ -1374,36 +1443,91 @@ reportAbuse: function(){
 		return line;
 	},
 	
-	getMessenger: function(){		
-		app.startLoading();		
+	getMessenger: function(){
+	
+		if(app.pageNumber == 1){
+			app.startLoading();
+		}
+	
+		app.itemsPerPage = 20;
+	
+	
 		$.ajax({
-			url: 'http://m.gobaby.co.il/api/v2/user/contacts',									
-			success: function(response){
-				//alert(JSON.stringify(response));
-				app.response = response;				
-				//if(pagesTracker.indexOf('messenger_page')!=-1){
-				//	pagesTracker.splice(pagesTracker.length-pagesTracker.indexOf('messenger_page'),pagesTracker.indexOf('messenger_page'));
-				//}
-				app.showPage('messenger_page');
-				app.container = app.currentPageWrapper.find('.chats_wrap');
-				app.container.html('');				
-				app.template = $('#messengerTemplate').html();
-				for(var i in app.response.allChats){
-					var currentTemplate = app.template; 
-					var chat = app.response.allChats[i];
-					currentTemplate = currentTemplate.replace("[IMAGE]",chat.user.mainImage);
-					currentTemplate = currentTemplate.replace(/\[USERNICK\]/g,chat.user.nickName);
-					currentTemplate = currentTemplate.replace("[RECENT_MESSAGE]",chat.recentMessage.text);
-					currentTemplate = currentTemplate.replace("[DATE]", chat.recentMessage.date);					
-					currentTemplate = currentTemplate.replace("[USER_ID]", chat.user.userId);
-					app.container.append(currentTemplate);
-					if(chat.newMessagesCount > 0||chat. user.isPaying == 1){
-						var currentUserNode = app.container.find(":last-child");
-						if(chat.newMessagesCount > 0)currentUserNode.find(".new_mes_count").html(chat.newMessagesCount).show();
-						if(chat.user.isPaying == 1)currentUserNode.find(".special2").show();
-					}
-				}
-				app.stopLoading();
+		   url: 'http://m.gobaby.co.il/api/v4/user/contacts/perPage:' + app.itemsPerPage + '/page:' + app.pageNumber,
+		   error: function(response){
+			   console.log(JSON.stringify(response));
+		   },
+		   success: function(response){
+		   
+			   //console.log(JSON.stringify(response));
+		   
+			   app.response = response;
+			   //if(pagesTracker.indexOf('messenger_page')!=-1){
+			   //	pagesTracker.splice(pagesTracker.length-pagesTracker.indexOf('messenger_page'),pagesTracker.indexOf('messenger_page'));
+			   //}
+			   app.showPage('messenger_page');
+		   
+		   
+			   app.container = app.currentPageWrapper.find('.chats_wrap');
+			   if(app.pageNumber == 1){
+			   app.container.html('');
+			   }
+		   
+			   if(app.currentPageId == 'messenger_page'){
+		   
+				   $('.loadingHTML').remove();
+			   
+				   app.responseItemsNumber = app.response.chatsNumber;
+			   
+				   if(app.responseItemsNumber == 0){
+				   app.container.append('<div class="center noResults">אין הודעות</div>')
+				   return;
+				   }
+			   
+			   
+				   app.template = $('#messengerTemplate').html();
+				   for(var i in app.response.allChats){
+						var currentTemplate = app.template;
+						var chat = app.response.allChats[i];
+						currentTemplate = currentTemplate.replace("[IMAGE]",chat.user.mainImage.url);
+						currentTemplate = currentTemplate.replace(/\[USERNICK\]/g,chat.user.nickName);
+						currentTemplate = currentTemplate.replace("[RECENT_MESSAGE]",chat.recentMessage.text);
+						currentTemplate = currentTemplate.replace("[DATE]", chat.recentMessage.date);
+						currentTemplate = currentTemplate.replace("[USER_ID]", chat.user.userId);
+						app.container.append(currentTemplate);
+						
+					   if(chat.newMessagesCount > 0 || chat.user.isPaying == 1){
+					       var currentUserNode = app.container.find(":last-child");
+					       if(chat.newMessagesCount > 0)
+					           currentUserNode.find(".new_mes_count").html(chat.newMessagesCount).show();
+				   
+					       if(chat.user.isPaying == 1)
+					           currentUserNode.find(".special2").show();
+				       }
+			   
+			       }
+			   
+			   
+			   //console.log(app.container.html());
+			   
+			   
+			   
+			   
+				   if(app.responseItemsNumber == app.itemsPerPage){
+					   var loadingHTML = '<div class="loadingHTML mar_top_8">'+$('#loadingBarTemplate').html()+'</div>';
+					   $(loadingHTML).insertAfter(app.container.find('.mail_section:last-child'));
+				   }
+				   //else{alert(app.responseItemsNumber +' '+app.itemsPerPage)}
+			   
+				   app.setScrollEventHandler(1000, 2000);
+			   
+		   
+			   }
+			   else{
+			       app.pageNumber--;
+			   }
+		   
+			   app.stopLoading();
 			}
 		});
 	},
@@ -1413,7 +1537,7 @@ reportAbuse: function(){
 		app.chatWith = chatWith;
 		app.startLoading();
 		$.ajax({
-			url: 'http://m.gobaby.co.il/api/v2/user/chat/'+app.chatWith,									
+			url: 'http://m.gobaby.co.il/api/v4/user/chat/'+app.chatWith,									
 			success: function(response){				
 				app.response = response;
 				//alert(JSON.stringify(app.response));
@@ -1488,7 +1612,7 @@ reportAbuse: function(){
 		if(message.length > 0){
 			$('#message').val('');			
 			$.ajax({
-				url: 'http://m.gobaby.co.il/api/v2/user/chat/'+app.chatWith,
+				url: 'http://m.gobaby.co.il/api/v4/user/chat/'+app.chatWith,
 				type: 'Post',
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify({			
@@ -1510,7 +1634,7 @@ reportAbuse: function(){
 	refreshChat: function(){
 		if(app.currentPageId == 'chat_page'){
 			$.ajax({
-				url: 'http://m.gobaby.co.il/api/v2/user/chat/'+app.chatWith+'/refresh',
+				url: 'http://m.gobaby.co.il/api/v4/user/chat/'+app.chatWith+'/refresh',
 				type: 'Get',
 				complete: function(response, status, jqXHR){					
 					//app.stopLoading();
@@ -1538,7 +1662,7 @@ reportAbuse: function(){
 	
 	checkNewMessages: function(){
 		checkNewMessagesRequest = $.ajax({
-			url: 'http://m.gobaby.co.il/api/v2/user/newMessagesCount',
+			url: 'http://m.gobaby.co.il/api/v4/user/newMessagesCount',
 			type: 'Get',
 			complete: function(response, status, jqXHR){					
 				//app.stopLoading();
@@ -1601,13 +1725,13 @@ reportAbuse: function(){
 	},
 	
 	deleteImage: function(){
-		app.requestUrl = 'http://m.gobaby.co.il/api/v2/user/images/delete/' + app.imageId,
+		app.requestUrl = 'http://m.gobaby.co.il/api/v4/user/images/delete/' + app.imageId,
 		app.requestMethod = 'Post';
 		app.getUserImages();
 	},
 	
 	displayUserImages: function(){
-		app.requestUrl = 'http://m.gobaby.co.il/api/v2/user/images';
+		app.requestUrl = 'http://m.gobaby.co.il/api/v4/user/images';
 		app.requestMethod = 'Get';
 		app.getUserImages();
 	},
@@ -1698,7 +1822,7 @@ reportAbuse: function(){
         var ft = new FileTransfer();
         ft.upload(
         	imageURI, 
-        	encodeURI("http://m.gobaby.co.il/api/v2/user/image"), 
+        	encodeURI("http://m.gobaby.co.il/api/v4/user/image"), 
         	app.uploadSuccess, 
         	app.uploadFailure,
 	        options
@@ -1751,7 +1875,7 @@ reportAbuse: function(){
 getEditProfile: function(){
 	
 	$.ajax({
-		   url: 'http://m.gobaby.co.il/api/v2/user/data',
+		   url: 'http://m.gobaby.co.il/api/v4/user/data',
 		   error: function(response){
 		   console.log(JSON.stringify(response));
 		   },
@@ -1889,7 +2013,7 @@ saveProf: function (el,tag){
 	
 	
 	$.ajax({
-		   url: 'http://m.gobaby.co.il/api/v2/user/data',
+		   url: 'http://m.gobaby.co.il/api/v4/user/data',
 		   //dataType: 'json',
 		   type: 'post',
 		   data: JSON.stringify({name:name,val:val}),
