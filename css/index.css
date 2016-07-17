@@ -24,6 +24,7 @@ a{
 
 .header{
 	background: #b8b8b8 url("../images/header_bg.png") repeat-x bottom;
+	background-size:100% 100%;
 	height:70px;
 	border:0px;
 	position: fixed;
@@ -36,8 +37,9 @@ a{
 #logo{
 	/*float:left;*/
 	width:121px;
-	height:70px;
+	height:100%;
 	background: url("../images/logo.png") no-repeat center center;
+	background-size:auto 100%;
 	position:absolute;
 	top:8px;
 	left:50%;
@@ -197,6 +199,19 @@ a{
 	font-size: 17px;
 }
 
+#authForm #user_input input, #authForm #pass_input input, #form_recovery #user_input input{
+	width:80%;
+	font-weight: bold;
+	font-size:17px;
+	color:#000;
+}
+
+[placeholder]{
+	color:#c8c8c9;
+	font-size:16px;
+	font-weight: bold;
+}
+
 .regInput textarea {
 	height: 100px;
 }
@@ -204,6 +219,11 @@ a{
 #user_input input, #pass_input input{
 	border:0px;
 	background: #ececec;
+}
+
+#login_page #user_input,#login_page #pass_input,#recovery_page #user_input{
+	text-align: center;
+	width: 100%;
 }
 
 /*
@@ -259,13 +279,18 @@ a{
 	height:42px;
 	background: url("../images/login_button.png") no-repeat;
 	background-size: 100%;
-	float:right;
+	float:left;
+	margin-left:3%;
 }
 
 #forgot{
-	float:left;
+	float: right;
+	text-decoration: underline;
 	line-height:40px;
-	margin-left: 10px;
+	margin-right:8%;
+	font-size: 13px;
+	padding: 0;
+	font-weight: normal;
 }
 
 #grey_line{
@@ -315,6 +340,8 @@ a{
 	color: #7d7d7d;
 	font-size: 10px;
 	width: 30px;
+	line-height:14px;
+	height: 13px;
 	text-align: right;
 	background: url("../images/online_icon.png") left center no-repeat;
 }
@@ -334,30 +361,23 @@ a{
 	/*filter: Alpha(Opacity=18);*/
 }
 
-
 #top_left_buttons{
-	
-	/*
-	 left:17px;
-	 z-index: 10;
-	 position:absolute;
-	 */
+	height: 100%;
 	width:33%;
 	float:left;
-	
+	margin-left:10px;
+	background: url("../images/header_bg.png");
+	background-size:100% 100%;
 }
 
 #top_right_buttons{
-	
-	/*
-	 position:absolute;
-	 right:17px;
-	 z-index: 10;
-	 */
-	
-	
+	height: 100%;
 	width:33%;
 	float:right;
+	pagging-right:10px;
+	background: url("../images/header_bg.png");
+	background-size:100% 100%;
+	display:block;
 }
 
 #right_buttons{
@@ -860,15 +880,19 @@ h1 span{
 	color:#ea077b;
 }
 
-.on2{
+.on2, .on{
 	display:none;
 	width:20px;
 	height:21px;
-	background:url("../images/online_icon2.png") no-repeat;
+	background-image:url("../images/online_icon2.png");
+	background-repeat: no-repeat;
 	position: absolute;
 	right:85px;
 	top:0px;
+	background-size: 100% auto;
 }
+
+.on{background-image:url("../images/online_icon.png");}
 
 .special{
 	width:44px;
@@ -985,15 +1009,15 @@ a .mail_section{
 	background:url("../images/new_mes_count_bg2.png") no-repeat;
 	background-size: 100%;
 	position:absolute;
-	top:0px;
-	right:0px;
+	top:4px;
+	right:-10px;
 	z-index:30;
-	width:18px;
-	height:17px;
-	font-size: 8px;
+	width:27px;
+	height:26px;
+	font-size: 13px;
 	color:#fff;
 	text-align: center;
-	line-height: 20px;
+	line-height: 27px;
 	font-weight: bold;
 }
 
@@ -1010,10 +1034,11 @@ a .mail_section{
 
 .new_mes{
 	background: url(../images/bg_mes.png) 10px 8px no-repeat;
+	background-size: 88%;
 	position:absolute;
 	/*bottom:-15px;*/
-	top:75px;
-	left: 10px;
+	top:95%;
+	left: 0;
 	/*text-shadow: 1px 1px #531133;
 	 
 	 border-radius: 8px;
@@ -1049,6 +1074,7 @@ a .mail_section{
 	width:30px;
 	height:44px;
 	background:url("../images/special_icon2.png") no-repeat;
+	background-size: 100%;
 	position: absolute;
 	right:41px;
 	top:-8px;
@@ -1088,6 +1114,7 @@ a .mail_section{
 	width:20px;
 	height:21px;
 	background:url("../images/online_icon2.png") no-repeat;
+	background-size: 100%;
 	position: absolute;
 	right:-5px;
 	top:-5px;
@@ -1097,6 +1124,7 @@ a .mail_section{
 	width:20px;
 	height:21px;
 	background:url("../images/online_icon2.png") no-repeat;
+	background-size: 100%;
 	position: absolute;
 	left:2px;
 	top:-2px;
@@ -1106,6 +1134,7 @@ a .mail_section{
 	width:26px;
 	height:26px;
 	background:url("../images/special_icon2.png") no-repeat;
+	background-size: 100%;
 	display:none;
 	margin-right: -5px;
 	margin-top: -5px;
@@ -1115,6 +1144,7 @@ a .mail_section{
 	width:26px;
 	height:26px;
 	background:url("../images/special_icon2.png") no-repeat;
+	background-size: 100%;
 	position:absolute;
 	top:-16px;
 	right:-18px;
@@ -1131,6 +1161,7 @@ a .mail_section{
 	width:23px;
 	height:22px;
 	background:url("../images/blue_star.png") no-repeat;
+	background-size: 100%;
 	display:none;
 }
 
@@ -1138,6 +1169,7 @@ a .mail_section{
 	width:23px;
 	height:22px;
 	background:url("../images/yellow_star.png") no-repeat;
+	background-size: 100%;
 }
 
 
@@ -1150,11 +1182,11 @@ a .mail_section{
 
 
 .double_checked {
-	background: url(../images/double_check.png) no-repeat center center;
+	background: url("../images/double_check.png") no-repeat center center;
 }
 
 .checked {
-	background: url(../images/check.png) no-repeat center center;
+	background: url("../images/check.png") no-repeat center center;
 }
 
 .message_in, .message_out{
@@ -1183,6 +1215,20 @@ a .mail_section{
 .message_out{
 	background-image: url("../images/mes_out_bg.png");
 	background-color:#e0e1e2;
+}
+
+.message_status {
+	float: right;
+	width: 39px;
+	height: 23px;
+	margin-right: 10px;
+}
+
+.message_status img {
+	height: 16px;
+	border-radius: 20px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
 }
 
 .message_info{
@@ -1585,7 +1631,7 @@ a .mail_section{
 }
 
 .hidden{
-	display:none;
+	display: none;
 }
 
 .subscr_text{
@@ -1708,20 +1754,128 @@ a .mail_section{
 #EULA_page,
 #report_abuse_page,
 #edit_profile_page,
+#contact_us_page,
 .pic_wrap,
 .appTemplates,
 .new_mes_count,
 .distance_value,
-.buySubscr
-{
+.buySubscr,
+/*.sortButton,*/
+.useFreePoint {
 	display:none;
-	
 }
 
 
 #main_page{
 	/*margin-top: 25px;*/
 }
+
+#main_page .content_wrap
+{
+	margin-top:35px !important;
+}
+
+
+.mb_wrap{
+	float: right;
+	width:33%;
+	height:112px;
+	background:url("../images/bg_mb.png") no-repeat;
+	background-size: 100%;
+	position: relative;
+}
+
+
+.mb_wrap:hover{
+	background:url("../images/bg_mb_active.png") no-repeat;
+	background-size: 100%;
+}
+
+.mb_wrap .text{
+	width: 100%;
+	text-align: center;
+	color: #666;
+	font-size: 14px;
+	margin-top: 75px;
+}
+
+.mb_wrap .new {
+	position: absolute;
+	top: -7px;
+	left: -4px;
+	background: url(../images/swiper/new.png) no-repeat center;
+	width: 61%;
+	height: 49%;
+	background-size: 83%;
+}
+
+#friends_online, #search_friends, #profile, #mail_box, #looked_me, #looked_them,  #contacted_them, #favorites, #fav_me, #update_profile, #like_but{
+	float:right;
+	width:100%;
+	height:100%;
+}
+
+
+
+
+
+#friends_online{
+	background:url("../images/friends_online_button.png") no-repeat 50% 30%;
+	background-size: 55%;
+}
+
+
+#search_friends{
+	background:url("../images/search_friends_button.png") no-repeat 50% 30%;
+	background-size: 50%;
+}
+
+#mail_box{
+	background:url("../images/mail_box_button.png") no-repeat 50% 30%;
+	position:relative;
+	background-size: 60%;
+}
+
+#profile{
+	background:url("../images/profile_button.png") no-repeat 50% 30%;
+	background-size: 60%;
+}
+
+#looked_me{
+	background:url("../images/looked_me_button.png") no-repeat 50% 30%;
+	background-size: 80%;
+}
+
+#looked_them{
+	background:url("../images/looked_them_button.png") no-repeat 50% 35%;
+	background-size: 80%;
+}
+
+#like_but{
+	background:url("../images/likes_main_btn.png") no-repeat 50% 30%;
+	background-size: 80%;
+}
+
+#contacted_them{
+	background:url("../images/contacted_them_button.png") no-repeat 50% 30%;
+	background-size: 40%;
+}
+
+#favorites{
+	background:url("../images/favorites_button.png") no-repeat 50% 30%;
+	background-size: 37%;
+}
+
+#fav_me{
+	background:url("../images/fav_me_button.png") no-repeat 50% 30%;
+	background-size: 80%;
+}
+
+#update_profile{
+	background:url("../images/update_profile_button.png") no-repeat 50% 30%;
+	background-size: 45%;
+}
+
 
 .imagesButtonsWrap button{
 	margin-bottom: 25px;
@@ -2172,10 +2326,266 @@ a .mail_section{
 	overflow: hidden;
 }
 
+#bannerLink .ui-btn, #bannerLink1 .ui-btn, #bannerLink2 .ui-btn{border-radius:10px;height:60px;line-height:40px;}
+
+@media (max-width:1024px) and (min-width:600px) {
+	#bannerLink .ui-btn, #bannerLink1 .ui-btn, #bannerLink2 .ui-btn, #bannerLink3 .ui-btn {height: 100px;line-height: 57px; }
+}
+
+
+.notText{
+	color:#606062;
+	margin-bottom:10px;
+}
+
+#likesNotifications{
+	display: none;
+	background: url("../images/swiper/notif_bg1.png") no-repeat center center;
+	background-size: 60px;
+	
+	position: absolute;
+	left: 0px;
+	top: 10px;
+	width: 80px;
+	height: 50px;
+	z-index:20;
+}
+
+#do_likes_page{
+	display:none;
+}
+
+#likesCount{
+	background: url("../images/swiper/noti.png") no-repeat center center;
+	background-size: 80%;
+	position: absolute;
+	right: 24px;
+	bottom: -11px;
+	width: 28px;
+	height: 28px;
+	font-size: 12px;
+	color: #fff;
+	padding-top: 12px;
+	text-align: center;
+	line-height:17px;
+}
+
+.isRead{
+	background: #bababa;
+}
+
+.mail_section.isRead .txt, .mail_section.isRead span{
+	color: #000;
+}
+
+.notText, .notifications_wrap *{
+	text-shadow:none;
+}
+
+.bingo{
+	position: absolute;
+	bottom: 5px;
+	left: 7px;
+	width: 50px;
+	height: 25px;
+	background-image: url("../images/swiper/bingo.png");
+	background-repeat: no-repeat;
+	background-size: 80%;
+	background-position: bottom center;
+}
+
+html, body {height: 100%; position:relative;}
+
+#do_likes_page{
+	width: 100%;
+	height: 500px;
+	position: relative;
+	margin-top: 50px;
+	background: #000;
+}
+
+.swiper-container {
+	position: absolute;
+	top: 8px;
+	right:0px;
+	
+	width: 100%;
+	height: 93%;
+}
+
+
+.swiper-slide .cont{
+	width: 100%;
+	height: 100%;
+	background-position: center;
+	background-size: contain;
+	background-color: #000;
+	background-repeat: no-repeat;
+	position: relative;
+}
+
+#do_likes_page .toolbar{
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	width: 100%;
+	height: 100px;
+	background: #bcbcbc;
+	z-index: 9999999999;
+}
+
+#do_likes_page .toolbar .box{
+	float: left;
+	width: 33%;
+	height: 100px;
+}
+
+#do_likes_page .toolbar .box .icon{
+	width: 65px;
+	height: 100%;
+	margin: 0px auto 0px auto;
+}
+
+
+#do_likes_page .toolbar .box .icon.like{
+	background: url('../images/swiper/like.png') no-repeat center center;
+}
+
+#do_likes_page .toolbar .box .icon.chat{
+	background: url('../images/swiper/mess.png') no-repeat center center;
+}
+
+#do_likes_page .toolbar .box .icon.unlike{
+	background: url('../images/swiper/unlike.png') no-repeat center center;
+}
+
+#do_likes_page .icon.close{
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	background: url('../images/swiper/icon_cancel.png') no-repeat;
+	background-size: 100%;
+	width: 32px;
+	height: 32px;
+	z-index: 9999999999;
+}
+
+#do_likes_page .nickname{
+	position: absolute;
+	right: 0px;
+	top: -5px;
+	margin: 15px;
+	padding: 5px 10px 5px 10px;
+	color: #fff;
+	background: #bcbcbc url('../images/swiper/bg_trasparent.png');
+	z-index: 9999999999;
+	
+}
 
 
 
+#bingo_page{
+	height:700px;
+}
 
+
+.bingoWrapper{
+	width: 100%;
+	height: 700px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background: #000;
+	opacity: .7;
+	z-index: 999999999999;
+	
+}
+
+.bingoWrapper .close{
+	position:absolute;
+	top: 20px;
+	right: 20px;
+	background: url('../images/swiper/close.png') no-repeat;
+	background-size:  100% 100%;
+	width: 37px;
+	height: 37px;
+}
+
+.bingoWrapper .logo{
+	width: 205px;
+	height: 105px;
+	margin: 75px auto 5px auto;
+	background: url('../images/swiper/bingo.png') no-repeat;
+	
+}
+
+.bingoWrapper .imagesWrapper{
+	width: 310px;
+	margin: 0px auto 0px auto;
+	
+}
+
+
+.bingoWrapper .imageCont{
+	float: right;
+	width: 120px;
+	height: 120px;
+	background: black;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center center;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50%;
+	border: 6px solid #fff;
+}
+
+
+.bingoWrapper .plus{
+	float: right;
+	width: 41px;
+	height: 132px;
+	background: url('../images/swiper/plus.png') no-repeat center center;
+	margin-left:5px;
+}
+
+
+.bingoWrapper .txt{
+	width: 100%;
+	font-size: 17px;
+	color: #fff;
+	text-align: center;
+	margin-top:20px;
+}
+
+.bingoWrapper .chat{
+	margin: 20px auto 0px auto;
+	background: url('../images/swiper/chatSplash.png') no-repeat;
+	width: 175px;
+	height: 57px;
+	text-align: center;
+	padding-left: 50px;
+}
+
+.bingoWrapper .ignore{
+	margin: 20px auto 0px auto;
+	background: url('../images/swiper/ignoreSplash.png') no-repeat;
+	width: 225px;
+	height: 57px;
+	text-align:center;
+}
+
+.bingoWrapper .chat span {
+	
+}
+
+.bingoWrapper .chat span, .bingoWrapper .ignore span {
+	color: #fff;
+	font-family: arial;
+	font-size: 18px;
+	line-height: 50px;
+	padding-left: 20px;
+}
 
 
 
